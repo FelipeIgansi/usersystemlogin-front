@@ -4,6 +4,7 @@ import { Mail, Lock, User } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
+import { Link, useNavigate } from 'react-router-dom';
 
 interface LoginPageProps {
   onSwitchToRegister: () => void;
@@ -15,16 +16,26 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSwitchToRegister }) => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const { login } = useAuth();
+  const navigate = useNavigate();
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
     setLoading(true);
     setError('');
 
-    const success = await login(email, password);
-    if (!success) {
-      setError('Email ou senha incorretos');
+    try {
+      const success = await login(email, password);
+      if (!success) {
+        setError('Email ou senha incorretos');
+      } else {
+        navigate('/');
+      }
+    } catch (error) {
+      setError('Erro ao fazer login. Tente novamente.');
     }
-    setLoading(false);
+    finally {
+      setLoading(false);
+    }
   };
 
 
@@ -50,9 +61,9 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSwitchToRegister }) => {
           </form>
           <div className="mt-3 text-center">
             <span>Não tem uma conta? </span>
-            <button type="button" className="btn btn-link p-0" onClick={onSwitchToRegister}>
+            <Link to="/register" className="btn btn-link p-0">
               Criar conta
-            </button>
+            </Link>
           </div>
         </div>
       </div>

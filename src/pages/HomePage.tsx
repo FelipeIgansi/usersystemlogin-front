@@ -9,20 +9,24 @@ export const HomePage: React.FC = () => {
 
   return (
 
-    <div>
-      <nav className="position-absolute top-50 start-50 translate-middle">
-        <div className="container">
-          <a className="navbar-brand d-flex align-items-center" href="#">
-            <Home className="me-2" /> Minha App
-          </a>
-          <div className="ms-auto d-flex align-items-center">
-            <div className="text-end me-3">
-              <small className="text-muted">Bem-vindo,</small><br />
-              <strong>{user?.name}</strong>
+    <div className="container text-center container-xl min-vh-100 min-vw-100">
+      <nav className="navbar bg-body-tertiary">
+        <div className="container d-flex justify-content-between align-items-center">
+          <div className="col">
+            <a className="navbar-brand d-flex align-items-center" href="#">
+              <Home className="me-2" /> Minha App
+            </a>
+          </div>
+
+          <div className="d-flex align-items-center ms-auto">
+            <div className="col text-end me-2">
+              <small className="text-muted">Bem-vindo, <strong>{user?.name}</strong></small>
             </div>
-            <Button variant="danger" onClick={logout}>
-              <LogOut className="me-1" /> Sair
-            </Button>
+            <div className="col">
+              <Button variant="danger" onClick={logout}>
+                <LogOut className="me-1" /> Sair
+              </Button>
+            </div>
           </div>
         </div>
       </nav>

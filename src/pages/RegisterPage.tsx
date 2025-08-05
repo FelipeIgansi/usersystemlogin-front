@@ -5,6 +5,7 @@ import { useAuth } from '../context/AuthContext';
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 interface RegisterPageProps {
@@ -19,8 +20,10 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onSwitchToLogin }) =
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const { register } = useAuth();
+  const navigate = useNavigate();
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
     setLoading(true);
     setError('');
 
@@ -30,16 +33,21 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onSwitchToLogin }) =
       return;
     }
 
-    const success = await register(name, email, password);
-    if (!success) {
+    try {
+      const success = await register(name, email, password);
+      if (success) {
+        navigate('/');
+      } else {
+        setError('Erro ao criar conta. Tente novamente.');
+      }
+    } catch (err) {
       setError('Erro ao criar conta. Tente novamente.');
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   return (
-
-
     <div className="position-absolute top-50 start-50 translate-middle">
       <div className="card shadow" style={{ maxWidth: '400px', width: '100%' }}>
         <div className="card-body p-4">
@@ -62,9 +70,9 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onSwitchToLogin }) =
           </form>
           <div className="mt-3 text-center">
             <span>Já tem uma conta? </span>
-            <button type="button" className="btn btn-link p-0" onClick={onSwitchToLogin}>
+            <Link to="/login" className="btn btn-link p-0">
               Entrar
-            </button>
+            </Link>
           </div>
         </div>
       </div>

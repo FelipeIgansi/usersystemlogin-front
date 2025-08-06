@@ -1,69 +1,93 @@
-# React + TypeScript + Vite
+# 💻 Frontend – Sistema de Autenticação de Usuários (React + TypeScript)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este projeto é o frontend de uma aplicação de autenticação de usuários, desenvolvido com **React**, utilizando **TypeScript** e empacotado com **Vite** para performance e simplicidade.
 
-Currently, two official plugins are available:
+A aplicação oferece telas funcionais para:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Cadastro de novo usuário
+- Login
+- Reset de senha
+- Tela inicial (home) após autenticação
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## ⚙️ Tecnologias e ferramentas utilizadas
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- React 18+
+- TypeScript
+- Vite
+- React Router
+- Context API
+- Bootstrap
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## 🧱 Organização e boas práticas
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+O projeto está estruturado com foco em legibilidade, escalabilidade e separação de responsabilidades:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+src/
+- components/ Componentes reutilizáveis
+- context/ Contextos globais (ex: AuthContext)
+- interfaces/ Interfaces e tipagens de dados
+- pages/ Páginas principais (Login, Cadastro, Home, etc)
+- services/ Serviços de comunicação com a API
+- types/ Tipos globais reutilizáveis
+- App.tsx
+- main.tsx
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+
+Outras boas práticas aplicadas:
+
+- Navegação protegida para rotas privadas
+- Armazenamento de token de autenticação com segurança
+- Tipagem forte com TypeScript
+- Código limpo, comentado e modularizado
+
+---
+
+## 🚀 Como executar o projeto localmente
+
+1. **Clone o repositório:**
+   ```bash
+   git clone https://github.com/FelipeIgansi/usersystemlogin-front.git
+   cd nome-do-repositorio (usersystemlogin-front)
+
+Instale as dependências:
+
+    npm install
+
+Execute a aplicação:
+
+    npm run dev
+
+Acesse no navegador:
+
+    http://localhost:5173
+
+📚 Telas e fluxos disponíveis
+
+    /register – Tela de cadastro de usuário
+
+    /login – Tela de login
+
+    /resetpassword – Tela de recuperação de senha
+
+    /home – Página inicial após login (rota protegida)
+
+🔐 Integração com a API
+
+A aplicação consome a API desenvolvida em Spring Boot.
+
+    O token JWT é armazenado em localStorage ou sessionStorage, e enviado automaticamente em cada requisição autenticada.
+
+    As rotas privadas só são acessíveis se o usuário estiver autenticado.
+
+
+✅ Teste rápido com usuário padrão
+
+Para facilitar os testes, você pode utilizar o usuário padrão criado automaticamente pela API:
+
+    E-mail: user@teste.com
+
+    Senha: 123456789

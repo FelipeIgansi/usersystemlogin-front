@@ -1,4 +1,4 @@
-// pages/LoginPage.tsx
+// pages/ResetPasswordPage.tsx
 import React, { useState } from 'react';
 import { Mail, Lock, User } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
@@ -7,13 +7,13 @@ import { Input } from '../components/ui/Input';
 import { Link, useNavigate } from 'react-router-dom';
 
 
-
-export const LoginPage: React.FC = () => {
+export const ResetPasswordPage: React.FC = () => {
   const [email, setEmail] = useState('');
+  const [token, setToken] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const { login } = useAuth();
+  const { resetPassword } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -22,7 +22,8 @@ export const LoginPage: React.FC = () => {
     setError('');
 
     try {
-      const success = await login(email, password);
+      const success = await resetPassword(email, token, password);
+
       if (!success) {
         setError('Email ou senha incorretos');
       } else {
@@ -51,19 +52,17 @@ export const LoginPage: React.FC = () => {
           </div>
           <form onSubmit={handleSubmit}>
             <Input type="email" placeholder="Email" value={email} onChange={setEmail} icon={<Mail />} required />
-            <Input type="password" placeholder="Senha" value={password} onChange={setPassword} icon={<Lock />} required />
-            <button onClick={() => navigate("/resetpassword")} className="btn btn-link">
-              Esqueci minha senha
-            </button>
+            <Input type="text" placeholder="Token de acesso" value={token} onChange={setToken} icon={<Lock />} required />
+            <Input type="password" placeholder="Nova Senha" value={password} onChange={setPassword} icon={<Lock />} required />
             {error && <div className="alert alert-danger">{error}</div>}
             <Button type="submit" disabled={loading} variant="primary">
               {loading ? 'Entrando...' : 'Entrar'}
             </Button>
           </form>
           <div className="mt-3 text-center">
-            <span>Não tem uma conta? </span>
-            <Link to="/register" className="btn btn-link p-0">
-              Criar conta
+            <span>Já tem uma conta? </span>
+            <Link to="/login" className="btn btn-link p-0">
+              Entrar
             </Link>
           </div>
         </div>

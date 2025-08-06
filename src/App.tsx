@@ -6,6 +6,7 @@ import { LoginPage } from './pages/LoginPage';
 import { RegisterPage } from './pages/RegisterPage';
 import { HomePage } from './pages/HomePage';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { ResetPasswordPage } from './pages/ResetPasswordPage';
 
 
 const PrivateRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -61,9 +62,7 @@ const AppRoutes: React.FC = () => {
         path="/login" 
         element={
           <PublicRoute>
-            <LoginPage onSwitchToRegister={function (): void {
-              throw new Error('Function not implemented.');
-            } } />
+            <LoginPage/>
           </PublicRoute>
         } 
       />
@@ -72,9 +71,17 @@ const AppRoutes: React.FC = () => {
         path="/register" 
         element={
           <PublicRoute>
-            <RegisterPage onSwitchToLogin={function (): void {
-              throw new Error('Function not implemented.');
-            } } />
+            <RegisterPage/>
+          </PublicRoute>
+        } 
+      />
+
+
+      <Route 
+        path="/resetpassword" 
+        element={
+          <PublicRoute>
+            <ResetPasswordPage/>
           </PublicRoute>
         } 
       />

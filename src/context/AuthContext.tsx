@@ -2,7 +2,7 @@
 import React, { useState, useEffect, createContext, useContext } from 'react';
 import type { User } from '../interfaces/User';
 import { apiService } from '../service/ApiService';
-import type {AuthContextType} from "../interfaces/AuthContextType";
+import type { AuthContextType } from "../interfaces/AuthContextType";
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
@@ -51,6 +51,23 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
+  const resetPassword = async (email: string, token: string, password: string): Promise<boolean> => {
+    try {
+      const response = await apiService.resetPassword(email, token, password);
+
+      if (response.token) {
+        setToken(response.token);
+        localStorage.setItem('token', response.token);
+        await fetchUser(response.token);
+        return true;
+      }
+      return false;
+    } catch (error) {
+      console.error('Erro ao cadastrar nova senha:', error);
+      return false;
+    }
+  };
+
 
   const register = async (name: string, email: string, cpf: string, password: string): Promise<boolean> => {
     try {
@@ -59,6 +76,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setToken(response.token);
         localStorage.setItem('token', response.token);
         await fetchUser(response.token);
+        console.log("Seu token é: " + response.token)
+        alert("Seu token está no console (para testar o esqueci a senha)! ;)")
         return true;
       }
       return false;
@@ -74,7 +93,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     localStorage.removeItem('token');
   };
   return (
-    <AuthContext.Provider value={{ user, token, login, register, logout, loading }}>
+    <AuthContext.Provider value={{ user, token, login, resetPassword, register, logout, loading }}>
       {children}
     </AuthContext.Provider>
   );

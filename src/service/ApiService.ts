@@ -34,6 +34,23 @@ export const apiService = {
     }
   },
 
+    async resetPassword(email: string, token: string, password: string) {
+    try {
+      const response = await fetch(`${API_BASE_URL}/auth/resetpassword`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, token, password }),
+      });
+
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+      return await response.json();
+    } catch (error) {
+      throw error;
+    }
+  },
+
   async getUser(token: string) {
     try {
       const response = await fetch(`${API_BASE_URL}/user`, {

@@ -47,6 +47,7 @@ export const HomePage: React.FC = () => {
                 <ul className="list-unstyled">
                   <li><strong>Nome:</strong> {user?.name}</li>
                   <li><strong>Email:</strong> {user?.email}</li>
+                  <li><strong>CPF:</strong> {user?.cpf}</li>
                   <li><strong>ID:</strong> {user?.id}</li>
                 </ul>
               </div>

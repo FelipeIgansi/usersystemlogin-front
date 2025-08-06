@@ -15,6 +15,7 @@ interface RegisterPageProps {
 export const RegisterPage: React.FC<RegisterPageProps> = ({ onSwitchToLogin }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [cpf, setCpf] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
@@ -34,7 +35,7 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onSwitchToLogin }) =
     }
 
     try {
-      const success = await register(name, email, password);
+      const success = await register(name, email, cpf, password);
       if (success) {
         navigate('/');
       } else {
@@ -61,6 +62,7 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onSwitchToLogin }) =
           <form onSubmit={handleSubmit}>
             <Input type="text" placeholder="Nome completo" value={name} onChange={setName} icon={<User />} required />
             <Input type="email" placeholder="Email" value={email} onChange={setEmail} icon={<Mail />} required />
+            <Input type="text" placeholder="CPF" value={cpf} onChange={setCpf} icon={<User />} required />
             <Input type="password" placeholder="Senha" value={password} onChange={setPassword} icon={<Lock />} required />
             <Input type="password" placeholder="Confirmar senha" value={confirmPassword} onChange={setConfirmPassword} icon={<Lock />} required />
             {error && <div className="alert alert-danger">{error}</div>}

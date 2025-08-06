@@ -1,7 +1,8 @@
 // contexts/AuthContext.tsx
 import React, { useState, useEffect, createContext, useContext } from 'react';
-import type { User, AuthContextType } from '../types';
+import type { User } from '../interfaces/User';
 import { apiService } from '../service/ApiService';
+import type {AuthContextType} from "../interfaces/AuthContextType";
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
@@ -32,7 +33,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setLoading(false);
     }
   };
-  
+
 
   const login = async (email: string, password: string): Promise<boolean> => {
     try {
@@ -49,11 +50,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       return false;
     }
   };
-  
 
-  const register = async (name: string, email: string, password: string): Promise<boolean> => {
+
+  const register = async (name: string, email: string, cpf: string, password: string): Promise<boolean> => {
     try {
-      const response = await apiService.register(name, email, password);
+      const response = await apiService.register(name, email, cpf, password);
       if (response.token) {
         setToken(response.token);
         localStorage.setItem('token', response.token);
@@ -72,7 +73,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setToken(null);
     localStorage.removeItem('token');
   };
-
   return (
     <AuthContext.Provider value={{ user, token, login, register, logout, loading }}>
       {children}
